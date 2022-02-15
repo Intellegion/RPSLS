@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     private CanvasGroup gamePanel;
 
     [SerializeField]
-    private float maxTimer;
+    private float maxTimer;  // Control the max allotted time
 
     private Hand enemyHand;
     private Hand playerHand;
@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
     {
         if (didGameStart)
         {
+            // Start the countdown
             if (timerSlider.value > 0)
             {
                 timerSlider.value -= Time.deltaTime;
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // All defeault values when starting a game
     public void Initialize()
     {
         timerSlider.maxValue = maxTimer;
@@ -89,6 +91,7 @@ public class GameManager : MonoBehaviour
 
     private void CompareHands()
     {
+        // Checking if the enemy type can be defeated by the current hand of the player
         if (Array.Exists(playerHand.VictoryTypes, element => element == enemyHand.HandType))
         {
             Victory();
@@ -116,6 +119,7 @@ public class GameManager : MonoBehaviour
         resultText.text = "DEFEAT";
         endScoreText.text = "Score = " + score;
 
+        // Update high score if necessary
         if (score > highScore)
         {
             PlayerPrefs.SetInt("highscore", score);
@@ -136,6 +140,7 @@ public class GameManager : MonoBehaviour
 
     private Hand GetRandomHand()
     {
+        // Making sure enemy hands dont repeat
         do
         {
             temporaryHand = possibleHands[UnityEngine.Random.Range(0, possibleHands.Length)];
@@ -145,6 +150,7 @@ public class GameManager : MonoBehaviour
         return temporaryHand;
     }
 
+    // Hide and show panels whenever required
     public void ShowPanel(CanvasGroup panel)
     {
         panel.alpha = 1;
